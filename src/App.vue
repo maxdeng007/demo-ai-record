@@ -125,7 +125,7 @@ const UI_ZH = {
   stepTranscribe: '转写',
   stepExtract: '抽取',
   stepStructure: '结构化',
-  notifyTaskCreated: '任务已加入您的管道',
+  notifyTaskCreated: '任务已添加',
   saveNotes: '保存纪要',
   notifyNotesSaved: '纪要已保存',
   notesUnsaved: '有未保存更改',
@@ -173,7 +173,7 @@ const UI_EN = {
   stepTranscribe: 'Transcribe',
   stepExtract: 'Extract',
   stepStructure: 'Structure',
-  notifyTaskCreated: 'Task added to your pipeline',
+  notifyTaskCreated: 'Task added',
   saveNotes: 'Save notes',
   notifyNotesSaved: 'Notes saved',
   notesUnsaved: 'Unsaved changes',
@@ -570,10 +570,15 @@ onBeforeUnmount(() => {
               <span>{{ ui.meetingNotes }}</span>
             </div>
             <div class="capture-head-right">
-              <span v-if="notesSaveStatus" class="save-status" :class="{ 'save-status--dirty': hasUnsavedChanges }">
+              <span
+                v-if="!isRecording && notesSaveStatus"
+                class="save-status"
+                :class="{ 'save-status--dirty': hasUnsavedChanges }"
+              >
                 {{ notesSaveStatus }}
               </span>
               <button
+                v-if="!isRecording"
                 type="button"
                 class="save-notes-btn"
                 :aria-label="ui.saveNotes"
