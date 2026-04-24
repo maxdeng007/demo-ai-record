@@ -1392,6 +1392,32 @@ onBeforeUnmount(() => {
   -webkit-tap-highlight-color: transparent;
 }
 
+.mic-button::before,
+.mic-button::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(25, 137, 250, 0.34);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.mic-button:not(.mic-button--recording)::before,
+.mic-button:not(.mic-button--recording)::after {
+  animation: mic-ripple 2.6s ease-out infinite;
+}
+
+.mic-button:not(.mic-button--recording)::after {
+  animation-delay: 1.3s;
+}
+
+.mic-button--recording::before,
+.mic-button--recording::after {
+  display: none;
+}
+
 .mic-button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
@@ -1411,6 +1437,10 @@ onBeforeUnmount(() => {
     inset 0 -4px 10px rgba(0, 0, 0, 0.14),
     0 10px 20px -8px rgba(25, 137, 250, 0.6);
   transition: transform 0.18s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mic-button:not(.mic-button--recording) .mic-core {
+  animation: mic-breath 2.8s ease-in-out infinite;
 }
 
 .mic-button:active .mic-core {
@@ -1437,6 +1467,10 @@ onBeforeUnmount(() => {
   transition: background 0.3s;
 }
 
+.mic-button:not(.mic-button--recording) .mic-ring--1 {
+  animation: mic-idle-glow 2.8s ease-in-out infinite;
+}
+
 .mic-button--recording .mic-ring--1 {
   background: radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.28), transparent 70%);
 }
@@ -1461,6 +1495,42 @@ onBeforeUnmount(() => {
   0% { transform: scale(0.7); opacity: 0.6; }
   70% { transform: scale(1.4); opacity: 0; }
   100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes mic-breath {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.14),
+      0 10px 20px -8px rgba(25, 137, 250, 0.6);
+  }
+  50% {
+    transform: scale(1.045);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.56),
+      inset 0 -4px 10px rgba(0, 0, 0, 0.13),
+      0 14px 28px -8px rgba(25, 137, 250, 0.72);
+  }
+}
+
+@keyframes mic-idle-glow {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.82; }
+}
+
+@keyframes mic-ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
 }
 
 /* ──────────────────── ANALYZE + REVEAL ─────────────────── */
